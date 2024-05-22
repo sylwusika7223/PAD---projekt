@@ -26,13 +26,16 @@ print(total_num)
 #lists to store data
 location = []
 prices = []
+m2_price = []
+rooms = []
+m2 = []
+floor = []
 urls = []
-offer_details = []
 seller = []
 
 #running the scraping func on each page
 i = 1
-while i <= 3:
+while i <= total_num:
     print('Working on page ' + str(i) + ' of ' + str(total_num))
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     
@@ -71,10 +74,20 @@ while i <= 3:
         try:
             details_element = listing.find_element(By.CSS_SELECTOR, 'div.css-1c1kq07.e12r8p6s0')
             details = details_element.find_elements(By.CSS_SELECTOR, 'dd')
+            rooms_text = details[0].text if len(details) > 0 else None
+            m2_text = details[1].text if len(details) > 1 else None
+            m2_price_text = details[2].text.replace(' ', '').replace('zł/m²', '') if len(details) > 2 else None
+            floor_text = details[3].text if len(details) > 3 else None
         except:
-            details = None
-            
-        offer_details.append(details)
+            rooms_text = None
+            m2_text = None
+            m2_price_text = None
+            floor_text = None
+
+        rooms.append(rooms_text)
+        m2.append(m2_text)
+        m2_price.append(m2_price_text)
+        floor.append(floor_text)
 
         #Seller type and name
         try:
@@ -95,19 +108,25 @@ while i <= 3:
 #check - length of the lists
 print("Długość lokalizacji:", len(location))
 print("Długość cen:", len(prices))
+print("Długość cen za m2:", len(m2_price))
+print("Długość liczby pokojów:", len(rooms))
+print("Długość metrażu:", len(m2))
+print("Długość piętra:", len(floor))
 print("Długość linków:", len(urls))
-print("Długość szczegółów:", len(details))
 print("Długość sprzedawców:", len(seller))
 
 #check - sample data
 print("Lokalizacja:", location)
 print("Ceny:", prices)
+print("Cena za m2:", m2_price)
+print("Pokoje:", rooms)
+print("Metraż:", m2)
+print("Piętro:", floor)
 print("Linki:", urls)
-print("Szczegóły:", details)
 print("Sprzedawca:", seller)
 
 #convert the lists into a dataframe
-data = {'Location': location, 'Price': prices, 'Details': offer_details, 'URL': urls, 'Seller': seller}
+data = {'Location': location, 'Price': prices, 'Price per m2': m2_price, 'Rooms': rooms, 'm2': m2 , 'floor': floor , 'URL': urls, 'Seller': seller}
 df = pd.DataFrame(data)
 
 #write df (data) to excel file
