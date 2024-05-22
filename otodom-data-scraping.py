@@ -4,27 +4,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 #initiate driver and declare url
+website = 'https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/warszawa?&market=SECONDARY&&limit=72'
 driver = webdriver.Chrome()
-driver.get("https://www.otodom.pl/")
 driver.maximize_window()
+driver.get(website)
 
 #accept cookies button
 cookies_button = driver.find_element(by=By.XPATH, value='//button[@id="onetrust-accept-btn-handler"]')
 cookies_button.click()
 
-#input "Warszawa" as loc
-location_input = driver.find_element(By.CSS_SELECTOR, 'button[data-cy="search.form.location.button"]')
-location_input.click()
-
-location_search_box = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.CSS_SELECTOR, 'div.css-15dyjke input[aria-label="Wpisz lokalizację"]'))
-)
-location_search_box.send_keys("Warszawa")
-
-location_checkbox = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.CSS_SELECTOR, 'input#mazowieckie\\/warszawa\\/warszawa\\/warszawa'))
-)
-location_checkbox.click()
-
+#get total number of result sites
+total_value = driver.find_element(By.XPATH, '(//li[contains(@class, "css-1tospdx")])[last()]')
+total_num = int(total_value.text)
+print(total_num)
 
 driver.quit()
