@@ -8,45 +8,17 @@ def write_to_excel(file, df, sheet_name):
     with pd.ExcelWriter(file, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer: 
         df.to_excel(writer, index=False, sheet_name=sheet_name)
 
-#initiate driver and declare url
-website = 'https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/warszawa?&market=SECONDARY&&limit=72'
-driver = webdriver.Chrome()
-driver.maximize_window()
-driver.get(website)
-
-#accept cookies button
-cookies_button = driver.find_element(by=By.XPATH, value='//button[@id="onetrust-accept-btn-handler"]')
-cookies_button.click()
-
-#get total number of result sites
-total_value = driver.find_element(By.XPATH, '(//li[contains(@class, "css-1tospdx")])[last()]')
-total_num = int(total_value.text)
-print(total_num)
-
-#lists to store data
-location = []
-prices = []
-m2_price = []
-rooms = []
-m2 = []
-floor = []
-urls = []
-seller = []
-
-#running the scraping func on each page
-i = 1
-while i <= total_num:
-    print('Working on page ' + str(i) + ' of ' + str(total_num))
+def scrape():
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     
     #the standard offer container without ptomoted ones
     listings_container = driver.find_element(By.CSS_SELECTOR, 'div[data-cy="search.listing.organic"]')
     
-    #all offers list
+    #all offers on site
     listings = listings_container.find_elements(By.CSS_SELECTOR, 'article[data-cy="listing-item"]')
 
     for listing in listings:
-        #Price
+        #price
         try:
             price_element = listing.find_element(By.CSS_SELECTOR, 'span.css-1uwck7i.e1a3ad6s0')
             price = price_element.text
@@ -54,7 +26,7 @@ while i <= total_num:
             price = None
         prices.append(price)
 
-        #Loc
+        #loc
         try:
             location_element = listing.find_element(By.CSS_SELECTOR, 'p.css-1dvtw4c.e12u5vlm0')
             location_text = location_element.text
@@ -62,7 +34,7 @@ while i <= total_num:
             location_text = None
         location.append(location_text)
 
-        #Url
+        #url
         try:
             url_element = listing.find_element(By.CSS_SELECTOR, 'a[data-testid="listing-item-link"]')
             url = url_element.get_attribute('href')
@@ -70,7 +42,7 @@ while i <= total_num:
             url = None
         urls.append(url)
 
-        #Details
+        #details
         try:
             details_element = listing.find_element(By.CSS_SELECTOR, 'div.css-1c1kq07.e12r8p6s0')
             details = details_element.find_elements(By.CSS_SELECTOR, 'dd')
@@ -89,7 +61,7 @@ while i <= total_num:
         m2_price.append(m2_price_text)
         floor.append(floor_text)
 
-        #Seller type and name
+        #seller type and name
         try:
             seller_element = listing.find_element(By.CSS_SELECTOR, 'div.css-7rx3ki.e1ipr7st2')
             seller_name = seller_element.find_element(By.CSS_SELECTOR, 'div[data-testid="listing-item-owner-name"]').text
@@ -103,6 +75,36 @@ while i <= total_num:
                 seller_info = None
 
         seller.append(seller_info)
+
+#initiate driver and declare url
+website = 'https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/warszawa?&market=SECONDARY&&limit=72'
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.get(website)
+
+#accept cookies button
+cookies_button = driver.find_element(by=By.XPATH, value='//button[@id="onetrust-accept-btn-handler"]')
+cookies_button.click()
+
+#get total number of result sites
+total_value = driver.find_element(By.XPATH, '(//li[contains(@class, "css-1tospdx")])[last()]')
+total_num = int(total_value.text)
+
+#lists to store data
+location = []
+prices = []
+m2_price = []
+rooms = []
+m2 = []
+floor = []
+urls = []
+seller = []
+
+#running the scraping func on each page
+i = 1
+while i <= total_num:
+    print('Working on page ' + str(i) + ' of ' + str(total_num))
+    scrape()
     i += 1
 
 #check - length of the lists
@@ -130,6 +132,6 @@ data = {'Location': location, 'Price': prices, 'Price per m2': m2_price, 'Rooms'
 df = pd.DataFrame(data)
 
 #write df (data) to excel file
-df.to_excel('otodom-date.xlsx', index=False)
+df.to_excel('otodom-data.xlsx', index=False)
 
 driver.quit()
