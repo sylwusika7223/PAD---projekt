@@ -2,6 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import pandas as pd
+
+def write_to_excel(file, df, sheet_name):
+    with pd.ExcelWriter(file, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer: 
+        df.to_excel(writer, index=False, sheet_name=sheet_name)
 
 #initiate driver and declare url
 website = 'https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/warszawa?&market=SECONDARY&&limit=72'
@@ -67,7 +72,9 @@ while i <= 3:
             details_element = listing.find_element(By.CSS_SELECTOR, 'div.css-1c1kq07.e12r8p6s0')
             details = details_element.find_elements(By.CSS_SELECTOR, 'dd')
         except:
-            offer_details.append(None)
+            details = None
+            
+        offer_details.append(details)
 
         #Seller type and name
         try:
@@ -98,5 +105,12 @@ print("Ceny:", prices)
 print("Linki:", urls)
 print("Szczegóły:", details)
 print("Sprzedawca:", seller)
+
+#convert the lists into a dataframe
+data = {'Location': location, 'Price': prices, 'Details': offer_details, 'URL': urls, 'Seller': seller}
+df = pd.DataFrame(data)
+
+#write df (data) to excel file
+df.to_excel('otodom-date.xlsx', index=False)
 
 driver.quit()
