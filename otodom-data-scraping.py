@@ -1,13 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+import time
 import pandas as pd
 
 def write_to_excel(file, df, sheet_name):
     with pd.ExcelWriter(file, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer: 
         df.to_excel(writer, index=False, sheet_name=sheet_name)
 
+#main scraping function
 def scrape():
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     
@@ -76,11 +77,20 @@ def scrape():
 
         seller.append(seller_info)
 
+    #click the next page button
+    next_page_button = driver.find_element(By.CSS_SELECTOR, 'li.css-gd4dj2:last-child')
+    actions = ActionChains(driver)
+    actions.move_to_element(next_page_button).click().perform()
+    time.sleep(5)
+
+
 #initiate driver and declare url
 website = 'https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/warszawa?&market=SECONDARY&&limit=72'
 driver = webdriver.Chrome()
 driver.maximize_window()
 driver.get(website)
+
+time.sleep(2)
 
 #accept cookies button
 cookies_button = driver.find_element(by=By.XPATH, value='//button[@id="onetrust-accept-btn-handler"]')
@@ -104,7 +114,11 @@ seller = []
 i = 1
 while i <= total_num:
     print('Working on page ' + str(i) + ' of ' + str(total_num))
-    scrape()
+    try: 
+        scrape()
+    except Exception as e:
+        print(e)
+        pass
     i += 1
 
 #check - length of the lists
