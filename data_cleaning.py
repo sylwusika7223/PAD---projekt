@@ -54,9 +54,12 @@ district_replacements = {
     "Młynów": "Wola",
     "Muranów": "Śródmieście",
     "Niedźwiadek": "Ursus",
+    "Niedzwiadek" : "Ursus",
     "Nowolipki": "Wola",
     "Szamoty": "Ursus",
     "Urlychów": "Wola",
+    "Ulrychów": "Wola",
+    "Gocław": "Praga-Południe",
     "Wyględów": "Mokotów",
     "Żerań": "Białołęka"
 }
@@ -85,11 +88,11 @@ def convert_to_pln(price):
         return float(price.replace('PLN', '').replace(',', '.'))
 
 #konwersja typów kolumn
-df['Currency'] = df['Price'].apply(lambda x: 'USD' if 'USD' in x else ('EUR' if 'EUR' in x else 'PLN'))
-df['Price'] = df['Price'].apply(convert_to_pln)
+df['Currency'] = df['Price'].apply(lambda x: 'USD' if 'USD' in x or '$' in x else ('EUR' if 'EUR' in x or '€' in x else 'PLN'))
+df['Price'] = df.apply(lambda row: convert_to_pln(row['Price']) if row['Currency'] == 'USD' or row['Currency'] == 'EUR' else float(row['Price'].replace('PLN', '').replace(',', '.')), axis=1)
 
 df['Price per m2'] = df['Price per m2'].str.replace(r'/m²', '')
-df['Price per m2'] = df['Price per m2'].apply(convert_to_pln)
+df['Price per m2'] = df.apply(lambda row: convert_to_pln(row['Price per m2']) if row['Currency'] == 'USD' or row['Currency'] == 'EUR' else float(row['Price per m2'].replace('PLN', '').replace(',', '.')), axis=1)
 
 df['Price'] = df['Price'].apply(lambda x: f"{x:.2f} PLN")
 df['Price per m2'] = df['Price per m2'].apply(lambda x: f"{x:.2f} PLN")
@@ -105,6 +108,19 @@ df['Floor'] = df['Floor'].str.extract('(\d+)').astype(float)
 df[['Seller name', 'Seller type']] = df['Seller'].str.split(', ', n=1, expand=True)
 df['Seller type'] = df['Seller type'].apply(lambda x: 'Biuro nieruchomości' if x == 'Biuro nieruchomości' else 'Oferta prywatna')
 df['Estate agency'] = df.apply(lambda row: row['Seller name'] if row['Seller type'] == 'Biuro nieruchomości' else '', axis=1)
+
+# funkcja do usuwania wartości odstających
+def remove_outliers(df, column):
+    lower_bound = df[column].quantile(0.0001)
+    upper_bound = df[column].quantile(0.9999)
+    return df[(df[column] >= lower_bound) & (df[column] <= upper_bound)]
+
+# usuwanie wartości odstających dla kolumn numerycznych
+numeric_columns = ['Price', 'Price per m2', 'Rooms', 'm2', 'Floor']
+for column in numeric_columns:
+    df[column] = df[column].str.replace(' PLN', '') if df[column].dtype == object else df[column]
+    df[column] = df[column].astype(float)
+    df = remove_outliers(df, column)
 
 #ustalenie kolejności tabel na wyjściu
 df = df[['Street', 'Urban area', 'District', 'm2', 'Rooms', 'Floor', 'Price', 'Price per m2', 'Currency', 'Seller type', 'Estate agency']]
