@@ -34,10 +34,11 @@ df[['Street', 'Urban area', 'District']] = df.apply(
     axis=1, result_type='expand'
 )
 
-df['Street'] = df.apply(lambda row: '' if (not street_pattern.search(row['Location']) and not re.search(r'\d{1,3}$', row['Location'])) else row['Street'], axis=1)
-df['Urban area'] = df.apply(lambda row: row['Location'].split(', ')[0] if (not street_pattern.search(row['Location']) and not re.search(r'\d{1,3}$', row['Location'])) else row['Urban area'], axis=1)
-df[['District', 'Rest']] = df['District'].str.split(', ', n=1, expand=True)
+df['Street'] = df.apply(lambda row: '' if (not street_pattern.search(row['Location']) and not re.search(r'\d{1,3}$', row['Location']) and 'Warszawa' in row['District']) else row['Street'], axis=1)
+df['Urban area'] = df.apply(lambda row: row['Location'].split(', ')[0] if (not street_pattern.search(row['Location']) and not re.search(r'\d{1,3}$', row['Location']) and 'Warszawa' in row['District']) else row['Urban area'], axis=1)
+df['District'] = df.apply(lambda row: row['Location'].split(', ')[1] if (not street_pattern.search(row['Location']) and not re.search(r'\d{1,3}$', row['Location']) and 'Warszawa' in row['District']) else row['District'], axis=1)
 
+df[['District', 'Rest']] = df['District'].str.split(', ', n=1, expand=True)
 df = df.drop(columns=['Location', 'Rest'])
 
 #zamiana dzielnic (błędne nazwy danych wejściowych pobranych ze strony)
@@ -65,6 +66,8 @@ district_replacements = {
 }
 
 df['District'] = df['District'].replace(district_replacements)
+df = df[(df['District'] != 'Warszawa') & (df['Urban area'] != 'Warszawa')]
+
 
 #pobieranie kursu walut (API NBP)
 def get_exchange_rate(currency_code):
