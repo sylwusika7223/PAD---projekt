@@ -11,7 +11,7 @@ sidebar = dbc.Nav(
                         html.Div(page["name"], className="ms-2"),
                     ],
                     href=page["path"],
-                    active="exact",
+                    active="exact"
                 )
                 for page in dash.page_registry.values()
             ],

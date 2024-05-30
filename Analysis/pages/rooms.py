@@ -22,74 +22,62 @@ fig1.update_layout(
 layout = html.Div(
     [
         dbc.Row([
-            dbc.Col(
-                html.P('Pierwszym wykresem związanym z liczbą pokoi jest wykres obrazujący zależność między średnią ceną mieszkań, a pokojami.')
-            )
+            html.H1('Analiza dotycząca liczby pokoi')
+        ], style={'textAlign': 'center'}),
+        dbc.Row([
+            html.P('Na tej stronie znajdują się wykresy, w których ważną rolę gra liczba pokoi. Znajdziemy tutaj zależności pomiędzy liczbą pokoi a ceną, ofertami oraz metrażem.')
+        ]),
+        html.Hr(),
+        dbc.Row([
+            html.P('Pierwszym wykresem związanym z liczbą pokoi jest wykres obrazujący zależność między średnią ceną mieszkań, a pokojami.')
         ]),
         dbc.Row([
-            dbc.Col(
-                dcc.Graph(
+            dcc.Graph(
                 id='mean-rooms-barplot',
                 figure=fig1
-                )
             )
         ]),
         dbc.Row([
-            dbc.Col(
-                html.P('Wykres Rozkład liczby pokoi w ofertach obrazuje jak wygląda liczebność pokoi w różnych ofertach. Możemy tutaj zauważyć, że najwięcej ofert zostało wystawionych z 2 lub 3 pokojami.')
+            html.P('Wykres Rozkład liczby pokoi w ofertach obrazuje jak wygląda liczebność pokoi w różnych ofertach. Możemy tutaj zauważyć, że najwięcej ofert zostało wystawionych z 2 lub 3 pokojami.')
+        ]),
+        dbc.Row([
+            html.P('W przypadku tego wykresu możemy dokładniej sprawdzić ilość ofert, operując na interesującej nas ilości pokoi.')
+        ]),
+        dbc.Row([
+            dcc.Graph(id='room-offer-histogram')
+        ]),
+        dbc.Row([
+            dcc.RangeSlider(
+                id='room-offer-slider',
+                min=data['Rooms'].min(),
+                max=data['Rooms'].max(),
+                value=[data['Rooms'].min(), data['Rooms'].max()],
+                marks={str(room): str(room) for room in range(int(data['Rooms'].min()), int(data['Rooms'].max()))}
+            )
+        ]),
+        html.Hr(),
+        dbc.Row([
+            html.P('Poniższe dwa wykresy są do siebie bardzo podobne. Pierwszy z nich przedstawia zależność metrażu od liczby pokoi z uwzględnieniem dzielnic, w których mieszkania się znajdują. Natomiast drugi z nich przedstawia zależność między liczbą pokoi, a ceną mieszkania również z uwzględnieniem dzielnic, w których się one znajdują.')
+        ]),
+        dbc.Row([
+            html.P('W przypadku obu wykresów możemy sprawdzić dokładniejszą liczbę pokoi w zależności od wybranej dzielnicy. Trzeba jednak pamiętać, że wraz z wyborem dzielnicy, oba wykresy się zmieniają.')
+        ]),
+        dbc.Row([
+            dcc.Dropdown(
+                id='location-dropdown',
+                options=[{'label': district, 'value': district} for district in districts],
+                value=[],
+                multi=True,
+                clearable=False
             )
         ]),
         dbc.Row([
-            dbc.Col(
-                html.P('W przypadku tego wykresu możemy dokładniej sprawdzić ilość ofert, operując na interesującej nas ilości pokoi.')
-            )
+            dcc.Graph(id='room-m2-scatter')
         ]),
         dbc.Row([
-            dbc.Col(dcc.Graph(id='room-offer-histogram'))
-        ]),
-        dbc.Row([
-            dbc.Col(
-                dcc.RangeSlider(
-                    id='room-offer-slider',
-                    min=data['Rooms'].min(),
-                    max=data['Rooms'].max(),
-                    value=[data['Rooms'].min(), data['Rooms'].max()],
-                    marks={str(room): str(room) for room in range(int(data['Rooms'].min()), int(data['Rooms'].max()))}
-                )
-            )
-        ]),
-        dbc.Row([
-            dbc.Col(
-                html.P('Poniższe dwa wykresy są do siebie bardzo podobne. Pierwszy z nich przedstawia zależność metrażu od liczby pokoi z uwzględnieniem dzielnic, w których mieszkania się znajdują. Natomiast drugi z nich przedstawia zależność między liczbą pokoi, a ceną mieszkania również z uwzględnieniem dzielnic, w których się one znajdują.')
-            )
-        ]),
-        dbc.Row([
-            dbc.Col(
-                html.P('W przypadku obu wykresów możemy sprawdzić dokładniejszą liczbę pokoi w zależności od wybranej dzielnicy. Trzeba jednak pamiętać, że wraz z wyborem dzielnicy, oba wykresy się zmieniają.')
-            )
-        ]),
-        dbc.Row([
-            dbc.Col(
-                dcc.Dropdown(
-                    id='location-dropdown',
-                    options=[{'label': district, 'value': district} for district in districts],
-                    value=[],
-                    multi=True,
-                    clearable=False
-                )
-            )
-        ]),
-        dbc.Row([
-            dbc.Col(     
-                dcc.Graph(id='room-m2-scatter')
-            )
-        ]),
-        dbc.Row([
-            dbc.Col(
-                dcc.Graph(id='room-price-scatter')
-            )
+            dcc.Graph(id='room-price-scatter')
         ])
-    ]
+    ], style={'margin-right': '20px'}
 )
 
 @callback(

@@ -22,8 +22,7 @@ layout = html.Div(
     [
         dbc.Row([
             html.H1('Analiza danych na temat mieszkań z rynku wtórnego na sprzedaż w Warszawie z dnia 20 maja 2024.')
-            
-        ]),
+        ], style={'textAlign': 'center'}),
         dbc.Row([
             html.P('W tym dashbordzie znajduje się analiza mieszkań względem cen, metrażu, lokalizacji oraz liczby pokoi. Przeanalizowałyśmy mieszkania wystawione na sprzedaż na stronie otodom.pl. Dane obejmują Warszawę i jej okolicę, a pobranie danych nastąpiło 20 maja 2024 roku.')
         ]),
@@ -41,11 +40,15 @@ layout = html.Div(
                 columns=[{'name': i, 'id': i} for i in data.columns],
                 style_cell={'textAlign': 'left'}
             )
-        ], style={'margin-right': '20px'}),
+        ]),
+        html.Hr(),
+        dbc.Row([
+            html.P('Poniżej znajduje się wykres przedstawiający podział ofert na poszczególne dzielnice. Możemy zauważyć, że pomiędzy Mokotowem, a Brzezinami jest bardzo duża różnica. W dzielnicy Mokotów zostało wystawionych na sprzedaż ponad 1200 mieszkań, podczas gdy w Brzezinach widnieje 1 oferta.')
+        ], style={'marginTop': 25}),
         dbc.Row([
             dcc.Graph(
             id='district-barplot',
             figure=fig1)
         ])
-    ]
+    ], style={'margin-right': '20px'}
 )

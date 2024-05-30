@@ -29,25 +29,26 @@ fig2.update_layout(
 layout = html.Div(
     [
         dbc.Row([
-            dbc.Col(
-                html.P('Sprzedawców możemy podzielić na dwie kategorie - biuro nieruchomości oraz osoba prywatna. Wykresy przedstawione poniżej porównują ze sobą obie te kategorie względem, na pierwszym wykresie, liczby ofert oraz średniej ceny mieszkania na drugim.')
+            html.H1('Analiza dotycząca sprzedawców')
+        ], style={'textAlign': 'center'}),
+        dbc.Row([
+            html.P('Przedstawiamy tutaj wykresy, na których znaleźli się sprzedawcy.')
+        ]),
+        html.Hr(),
+        dbc.Row([
+            html.P('Sprzedawców możemy podzielić na dwie kategorie - biuro nieruchomości oraz osoba prywatna. Wykresy przedstawione poniżej porównują ze sobą obie te kategorie względem, na pierwszym wykresie, liczby ofert oraz średniej ceny mieszkania na drugim.')
+        ]),
+        dbc.Row([
+            dcc.Graph(
+                id='seller-offer-barplot',
+                figure=fig1
             )
         ]),
         dbc.Row([
-            dbc.Col(
-                dcc.Graph(
-                    id='seller-offer-barplot',
-                    figure=fig1
-                )
-            )
-        ]),
-        dbc.Row([
-            dbc.Col(
-                dcc.Graph(
-                    id='seller-mean-barplot',
-                    figure=fig2
-                )
+            dcc.Graph(
+                id='seller-mean-barplot',
+                figure=fig2
             )
         ])
-    ]
+    ], style={'margin-right': '20px'}
 )
