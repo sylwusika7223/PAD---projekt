@@ -38,7 +38,7 @@ layout = html.Div(
             )
         ]),
         dbc.Row([
-            html.P('Wykres Rozkład liczby pokoi w ofertach obrazuje jak wygląda liczebność pokoi w różnych ofertach. Możemy tutaj zauważyć, że najwięcej ofert zostało wystawionych z 2 lub 3 pokojami.')
+            html.P('Wykres \'Rozkład liczby pokoi w ofertach\' obrazuje jak wygląda liczebność pokoi w różnych ofertach. Możemy tutaj zauważyć, że najwięcej ofert zostało wystawionych z 2 lub 3 pokojami.')
         ]),
         dbc.Row([
             html.P('W przypadku tego wykresu możemy dokładniej sprawdzić ilość ofert, operując na interesującej nas ilości pokoi.')
