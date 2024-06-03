@@ -51,10 +51,10 @@ layout = html.Div(
                 figure=fig1
             )
         ]),
+        html.Hr(),
         dbc.Row([
             html.P('Kolejny wykres przedstawia zależność między ceną, a metrażem mieszkania z podziałem na dzielnice Warszawy. Możemy na nim zaobserwować, że duża większość ofert ma podobną do siebie cenę, jednak jest kilka odchyleń. Najbardziej widocznym jest mieszkanie na Ursynowie, które kosztuje ponad 15 milionów złotych za 842 metry kwadratowe. Wykres jest zrobiony tak, że im większy jest rekord tym większa jest cena za metr kwadratowy tego mieszkania.')
         ]),
-        html.Hr(),
         dbc.Row([
             html.P('Ze względu na ogromną liczbę mieszkań, wykres można dostosować zmieniając na suwaku zakres cenowy jaki chcemy podejrzeć. Można także skorzystać z listy dołączonej do wykresu niżej. Jednak jeśli będziemy z niej korzystać to oba wykresy zmienią swoje dane.')  
         ]),
