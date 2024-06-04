@@ -1,0 +1,10 @@
+selenium
+pandas
+requests
+numpy
+seaborn
+matplotlib
+plotly
+dash
+dash-bootstrap-components
+scikit-learn
