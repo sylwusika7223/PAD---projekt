@@ -14,7 +14,7 @@ layout = html.Div(
             html.H1('Model regresyjny')
         ], style={'textAlign': 'center'}),
         dbc.Row([
-            html.P('Podjęłyśmy decyzję, że w naszym projekcie bardziej pasuje model regresji liniowej. Jego zadaniem jest predykcja cen nieruchomości dla danych wybranych jako dane testowe.')
+            html.P('Podjęłyśmy decyzję, że do naszego projektu bardziej pasuje model regresji liniowej. Jego zadaniem jest predykcja cen nieruchomości dla danych wybranych jako dane testowe.')
         ]),
         dbc.Row([
             html.P('Poniższa tabelka przedstawia 20 przykładowych danych, które przewidział model.')

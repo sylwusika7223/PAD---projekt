@@ -39,11 +39,11 @@ layout = html.Div(
             html.H1('Analiza dotycząca cen mieszkań')
         ], style={'textAlign': 'center'}),
         dbc.Row([
-            html.P('Przedstawiłyśmy tutaj wykresy, na których główną rolę gra cena. Pojawiają się zależności pomiędzy metrażem mieszkania oraz dzielnicami.')
+            html.P('Przedstawiłyśmy tutaj wykresy, w których główną rolę gra cena. Pojawiają się zależności pomiędzy metrażem mieszkania oraz dzielnicami.')
         ]),
         html.Hr(),
         dbc.Row([
-            html.P('Jako pierwsze chcemy zobaczyć jak wygląda stosunek cen mieszkań do liczby ofert. Z wykresu możemy wyczytać, że najwięcej ofert mieści się w przedziale od 500 tysięcy do 1 milionie złotych.')
+            html.P('Jako pierwsze chcemy zobaczyć jak wygląda stosunek cen mieszkań do liczby ofert. Z wykresu możemy wyczytać, że najwięcej ofert mieści się w przedziale od 500 tysięcy do 1 miliona złotych.')
         ]),
         dbc.Row([
             dcc.Graph(
@@ -87,7 +87,7 @@ layout = html.Div(
         ]),
         html.Hr(),
         dbc.Row([
-            html.P('Ostatnim wykresem na tej podstronie jest wykres przedstawiający średnią cenę za metr kwadratowy w dzielnicach.')
+            html.P('Ostatnim wykresem na tej podstronie jest wykres przedstawiający średnią cenę za metr kwadratowy w poszczególnych dzielnicach.')
         ], style={'marginTop': 25}),
         dbc.Row([
             dcc.Graph(

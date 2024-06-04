@@ -25,7 +25,7 @@ layout = html.Div(
             html.H1('Analiza dotycząca liczby pokoi')
         ], style={'textAlign': 'center'}),
         dbc.Row([
-            html.P('Na tej stronie znajdują się wykresy, w których ważną rolę gra liczba pokoi. Znajdziemy tutaj zależności pomiędzy liczbą pokoi a ceną, ofertami oraz metrażem.')
+            html.P('Na tej stronie znajdują się wykresy, w których ważną rolę odgrywa liczba pokoi. Znajdziemy tutaj zależności pomiędzy liczbą pokoi a ceną, ofertami oraz metrażem.')
         ]),
         html.Hr(),
         dbc.Row([
@@ -57,7 +57,7 @@ layout = html.Div(
         ]),
         html.Hr(),
         dbc.Row([
-            html.P('Poniższe dwa wykresy są do siebie bardzo podobne. Pierwszy z nich przedstawia zależność metrażu od liczby pokoi z uwzględnieniem dzielnic, w których mieszkania się znajdują. Natomiast drugi z nich przedstawia zależność między liczbą pokoi, a ceną mieszkania również z uwzględnieniem dzielnic, w których się one znajdują.')
+            html.P('Poniższe dwa wykresy są do siebie bardzo podobne. Pierwszy z nich przedstawia zależność metrażu od liczby pokoi z uwzględnieniem dzielnic, w których mieszkania się znajdują. Natomiast drugi z nich przedstawia zależność między liczbą pokoi, a ceną mieszkań również z uwzględnieniem dzielnic, w których się one znajdują.')
         ]),
         dbc.Row([
             html.P('W przypadku obu wykresów możemy sprawdzić dokładniejszą liczbę pokoi w zależności od wybranej dzielnicy. Trzeba jednak pamiętać, że wraz z wyborem dzielnicy, oba wykresy się zmieniają.')

@@ -36,7 +36,7 @@ layout = html.Div(
         ]),
         html.Hr(),
         dbc.Row([
-            html.P('Sprzedawców możemy podzielić na dwie kategorie - biuro nieruchomości oraz osoba prywatna. Wykresy przedstawione poniżej porównują ze sobą obie te kategorie względem, na pierwszym wykresie, liczby ofert oraz średniej ceny mieszkania na drugim.')
+            html.P('Sprzedawców możemy podzielić na dwie kategorie - biuro nieruchomości oraz osoba prywatna. Wykresy przedstawione poniżej porównują ze sobą obie te kategorie względem liczby ofert na pierwszym wykresie oraz średniej ceny mieszkania na drugim.')
         ]),
         dbc.Row([
             dcc.Graph(

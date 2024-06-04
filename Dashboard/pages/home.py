@@ -24,7 +24,7 @@ layout = html.Div(
             html.H1('Analiza danych na temat mieszkań z rynku wtórnego na sprzedaż w Warszawie z dnia 20 maja 2024.')
         ], style={'textAlign': 'center'}),
         dbc.Row([
-            html.P('W tym dashbordzie znajduje się analiza mieszkań względem cen, metrażu, lokalizacji oraz liczby pokoi. Przeanalizowałyśmy mieszkania wystawione na sprzedaż na stronie otodom.pl. Dane obejmują Warszawę i jej okolicę, a pobranie danych nastąpiło 20 maja 2024 roku.')
+            html.P('W tym dashbordzie znajduje się analiza mieszkań pod względem cen, metrażu, lokalizacji oraz liczby pokoi. Przeanalizowałyśmy mieszkania wystawione na sprzedaż na stronie otodom.pl. Dane obejmują Warszawę i jej okolice i zostały pobrane 20 maja 2024 roku.')
         ]),
         dbc.Row([
             html.P('Dzięki analizie wystawionych na sprzedaż mieszkań, uzyskałyśmy ponad 7 tysięcy rekorów. Poniższa tabelka przedstawia domyślnie 20 z nich.')
@@ -43,12 +43,16 @@ layout = html.Div(
         ]),
         html.Hr(),
         dbc.Row([
-            html.P('Poniżej znajduje się wykres przedstawiający podział ofert na poszczególne dzielnice. Możemy zauważyć, że pomiędzy Mokotowem, a Brzezinami jest bardzo duża różnica. W dzielnicy Mokotów zostało wystawionych na sprzedaż ponad 1200 mieszkań, podczas gdy w Brzezinach widnieje 1 oferta.')
+            html.P('Poniżej znajduje się wykres przedstawiający podział ofert na poszczególne dzielnice. Możemy zauważyć, że pomiędzy Mokotowem, a powiatem pruszkowskim jest bardzo duża różnica. W dzielnicy Mokotów zostało wystawionych na sprzedaż ponad 1200 mieszkań, podczas gdy w powiecie widnieją tylko 3 oferty.')
         ], style={'marginTop': 25}),
         dbc.Row([
             dcc.Graph(
             id='district-barplot',
             figure=fig1)
-        ])
+        ]),
+        html.Hr(),
+        dbc.Row([
+            html.P('Na podstawie zebranych danych i przedstawionych wykresów możemy zauważyć, że zdecydowana większość ofert jest wystawiana przez biura nieruchomości ale nie oznacza to, że ceny są dużo wyższe. Średnia cena za mieszkanie od osoby prywatnej wynosi 1 milion i 100 tysięcy, a od biura nieruchomości 1 milion i 200 tysięcy złotych. Daje nam to różnicę wynoszącą około 100 tysięcy złotych. Zwykle im bliżej centrum tym wystawiane mieszkania są droższe, z małymi wyjątkami, którymi są dzielnice Mokotów oraz Wilanów. One również plasują się na czołowych miejscach pod względem ceny. Najczęściej za mieszkanie zapłacimy w przedziale od 500 tysięcy do 1 miliona złotych. Zdecydowana większość ofert dotyczy mieszkań 2 lub 3 pokojowych.')
+        ], style={'marginTop': 25}),
     ], style={'margin-right': '20px'}
 )
