@@ -11,7 +11,14 @@ data = pd.read_excel('cleaned_data.xlsx')
 #zmienne
 mean_price_rooms = data.groupby('Rooms')['Price'].mean()
 districts = data['District'].dropna().unique()
+average_area_by_district = data.groupby('District')['m2'].mean().sort_values()
 
+#barplot area-district-barplot
+fig = px.bar(average_area_by_district, x=average_area_by_district.values, y=average_area_by_district.index, orientation='h', title='Średni metraż mieszkania w zależności od dzielnicy', color=average_area_by_district)
+fig.update_layout(
+    xaxis_title='Średni metraż mieszkania (m2)', 
+    yaxis_title='Dzielnica'
+)
 #barplot mean-rooms-barplot
 fig1=px.bar(mean_price_rooms, x=mean_price_rooms.index, y=mean_price_rooms.values, title='Średnia cena mieszkań w zależności od liczby pokoi', color_discrete_sequence=['thistle'])
 fig1.update_layout(
@@ -26,6 +33,19 @@ layout = html.Div(
         ], style={'textAlign': 'center'}),
         dbc.Row([
             html.P('Na tej stronie znajdują się wykresy, w których ważną rolę odgrywa liczba pokoi. Znajdziemy tutaj zależności pomiędzy liczbą pokoi a ceną, ofertami oraz metrażem.')
+        ]),
+        html.Hr(),
+        dbc.Row([
+            html.P('Zanim jednak przyjrzymy się wykresom obrazującym liczbę pokoi, zerkniemy na wykres przedstawiający rozkład średniego metrażu mieszkań w warszawskich dzielnicach.')
+        ]),
+        dbc.Row([
+            html.P('Z wykresu możemy wyczytać, że mieszkania o największym metrażu znajdują się w dzielnicy Wesoła. Mieszkania są większe od mieszkań na Wilanowie o średnio ponad 10 metrów kwadratowych. Natomiast różnica pomiędzy mieszkaniami w Wesołej, a tymi w dzielnicy Włochy, które są najmniejsze, to ponad 40 metrów kwadratowych.')
+        ]),
+        dbc.Row([
+            dcc.Graph(
+                id='area-district-barplot',
+                figure=fig
+            )
         ]),
         html.Hr(),
         dbc.Row([
