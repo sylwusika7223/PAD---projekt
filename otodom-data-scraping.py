@@ -121,26 +121,6 @@ while i <= total_num:
         pass
     i += 1
 
-#check - length of the lists
-print("Długość lokalizacji:", len(location))
-print("Długość cen:", len(prices))
-print("Długość cen za m2:", len(m2_price))
-print("Długość liczby pokojów:", len(rooms))
-print("Długość metrażu:", len(m2))
-print("Długość piętra:", len(floor))
-print("Długość linków:", len(urls))
-print("Długość sprzedawców:", len(seller))
-
-#check - sample data
-print("Lokalizacja:", location)
-print("Ceny:", prices)
-print("Cena za m2:", m2_price)
-print("Pokoje:", rooms)
-print("Metraż:", m2)
-print("Piętro:", floor)
-print("Linki:", urls)
-print("Sprzedawca:", seller)
-
 #convert the lists into a dataframe
 data = {'Location': location, 'Price': prices, 'Price per m2': m2_price, 'Rooms': rooms, 'm2': m2 , 'floor': floor , 'URL': urls, 'Seller': seller}
 df = pd.DataFrame(data)
